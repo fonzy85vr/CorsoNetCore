@@ -4,7 +4,7 @@ using CorsoNetCore.Models.ViewModel;
 
 namespace CorsoNetCore.Models.Services.BusinessLogic
 {
-    public class CourcesBL
+    public class CoursesBL : ICoursesBL
     {
         public List<CourseViewModel> GetCourses()
         {

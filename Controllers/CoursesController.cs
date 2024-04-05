@@ -1,17 +1,26 @@
 ﻿using CorsoNetCore.Models.Services.BusinessLogic;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CorsoNetCore.Controllers {
-    public class CoursesController : Controller {
-        public IActionResult Index() {
-            ViewData["Title"] = "Elenco dei corsi";
+namespace CorsoNetCore.Controllers
+{
+    public class CoursesController : Controller
+    {
+        private readonly ICoursesBL _courcesBL;
 
-            var courcesBl = new CourcesBL();
-            var courses = courcesBl.GetCourses();
+        public CoursesController(ICoursesBL courcesBL)
+        {
+            _courcesBL = courcesBL;
+        }
+
+        public IActionResult Index()
+        {
+            ViewData["Title"] = "Elenco dei corsi";
+            var courses = _courcesBL.GetCourses();
             return View(courses);
         }
 
-        public IActionResult Detail(string id) {
+        public IActionResult Detail(string id)
+        {
             return View();
         }
     }
