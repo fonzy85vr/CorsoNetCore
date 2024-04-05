@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace CorsoNetCore.Controllers {
     public class CoursesController : Controller {
         public IActionResult Index() {
+            ViewData["Title"] = "Elenco dei corsi";
+
             var courcesBl = new CourcesBL();
             var courses = courcesBl.GetCourses();
             return View(courses);
