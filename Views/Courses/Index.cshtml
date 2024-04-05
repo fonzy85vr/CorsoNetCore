@@ -1,26 +1,35 @@
-﻿<h1>Elenco Corsi</h1>
+﻿@using CorsoNetCore.Models.ViewModel
+@model List<CourseViewModel>
+<h1>Elenco Corsi</h1>
 
-@for(var i = 0; i < 5; i++){
+@foreach (var course in Model){
     <div class="row">
         <div class="col-md-1">
-            Image
+            @course.ImagePath
         </div>
         <div class="col-md-5">
-            <h2>Titolo del corso</h2>
-            <author>di Marco</author>
+            <h2>@course.Title</h2>
+            <author>di @course.Author</author>
         </div>
-        <div class="col-md-2 rating">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
+        <div class="col-md-2 rating" title="@course.Rating">
+            @for(var i = 1; i <= 5; i++){
+                if (course.Rating >= i) {
+                    <i class="fas fa-star"></i>
+                } else if (course.Rating > i - 0.5){
+                    <i class="fas fa-star-half-alt"></i>
+                } else{
+                    <i class="far fa-star"></i>
+                }
+            }
         </div>
         <div class="col-md-2">
-            EUR 10,99<br /><s>EUR 12,99</s>
+            @course.CurrentPrice.ToString()
+            @if(!course.CurrentPrice.Equals(course.Price)){
+                <br /><s>@course.Price.ToString()</s>
+            }
         </div>
         <div class="col-md-2">
-            <a class="btn btn-outline-primary" asp-action="Detail" asp-controller="Courses" asp-route-id="@i">Dettaglio corso @i</a>
+            <a class="btn btn-outline-primary" asp-action="Detail" asp-controller="Courses" asp-route-id="@course.Id">Dettaglio corso</a>
         </div>
     </div>
 }
