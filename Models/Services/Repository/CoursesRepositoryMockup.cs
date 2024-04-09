@@ -1,19 +1,22 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using CorsoNetCore.Models.DataTypes;
 using CorsoNetCore.Models.DataTypes.Enums;
 using CorsoNetCore.Models.ViewModel;
+using Microsoft.VisualBasic;
 
-namespace CorsoNetCore.Models.Services.Service
+namespace CorsoNetCore.Models.Services.Repository
 {
-    public class CoursesService : ICoursesService
+    public class CoursesRepositoryMockup : ICoursesRepository
     {
-        public List<CourseViewModel> GetCourses()
-        {
+        public IEnumerable<CourseViewModel> GetCourses(){
             var randPrice = new Random();
-            var toRet = new List<CourseViewModel>();
-
+            
             for(var i = 0; i < 5; i++){
                 var price = Convert.ToDecimal(randPrice.NextDouble() * 10 + 10);
-                toRet.Add(new CourseViewModel{
+               yield return new CourseViewModel{
                     Author = "Nome Cognome",
                     Id = Guid.NewGuid(),
                     CurrentPrice = new Money{
@@ -27,10 +30,8 @@ namespace CorsoNetCore.Models.Services.Service
                     ImagePath = "",
                     Rating = randPrice.NextDouble() *5,
                     Title = $"Corso {i}"
-                });
+                };
             }
-
-            return toRet;
         }
     }
 }

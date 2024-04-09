@@ -1,3 +1,4 @@
+using CorsoNetCore.Models.Services.Repository;
 using CorsoNetCore.Models.Services.Service;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddMvc();
 builder.Services.AddTransient<ICoursesService, CoursesService>();
+builder.Services.AddSingleton<ICoursesRepository, CoursesRepositoryMockup>();
 
 var app = builder.Build();
 
