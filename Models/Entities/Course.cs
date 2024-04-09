@@ -2,7 +2,7 @@ using CorsoNetCore.Models.DataTypes;
 
 namespace CorsoNetCore.Models.Entities
 {
-    public class Course
+    public partial class Course
     {
         public int Id { get; set; }
         public string Title { get; set; }

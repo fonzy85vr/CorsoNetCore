@@ -15,7 +15,7 @@ namespace CorsoNetCore.Models.Services.Service
 
         public async Task<List<CourseViewModel>> GetCourses()
         {
-            var courses = await _dbContext.Courses.AsNoTracking().Select(course => 
+            var queryCourses = _dbContext.Courses.AsNoTracking().Select(course => 
             new CourseViewModel{
                     Author = course.Author,
                     CurrentPrice = course.CurrentPrice,
@@ -25,7 +25,8 @@ namespace CorsoNetCore.Models.Services.Service
                     Rating = course.Rating,
                     Title = course.Title
                 }
-            ).ToListAsync();
+            );
+            var courses = await queryCourses.ToListAsync();
             
             return courses;
         }

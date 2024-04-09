@@ -31,6 +31,8 @@ namespace CorsoNetCore.Models.Services.Repository
         {
             modelBuilder.Entity<Course>(entity =>
             {
+                entity.ToTable("Courses");
+
                 entity.OwnsOne(course => course.CurrentPrice, builder =>
                 {
                     builder.Property(money => money.Currency).HasConversion<string>();
