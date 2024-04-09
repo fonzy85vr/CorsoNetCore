@@ -7,15 +7,18 @@ namespace CorsoNetCore.Models.Services.Service
     public class CoursesService : ICoursesService
     {
         private readonly CourcesDbContext _dbContext;
+        private readonly ILogger<CoursesService> _logger;
 
-        public CoursesService(CourcesDbContext dbContext)
+        public CoursesService( ILogger<CoursesService> logger, CourcesDbContext dbContext)
         {
             _dbContext = dbContext;
+            _logger = logger;
         }
 
         public async Task<List<CourseViewModel>> GetCourses()
         {
-            var queryCourses = _dbContext.Courses.AsNoTracking().Select(course => 
+            _logger.LogInformation("Recuperiamo la lista dei corsi");
+            var queryCourses = _dbContext.Courses.Select(course => 
             new CourseViewModel{
                     Author = course.Author,
                     CurrentPrice = course.CurrentPrice,

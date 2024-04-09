@@ -1,5 +1,6 @@
 using CorsoNetCore.Models.Services.Repository;
 using CorsoNetCore.Models.Services.Service;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,13 +8,19 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMvc();
 builder.Services.AddTransient<ICoursesService, CoursesService>();
 
-builder.Services.AddDbContext<CourcesDbContext>();
+builder.Services.AddDbContextPool<CourcesDbContext>(options => {
+    options.UseSqlite(builder.Configuration.GetConnectionString("Default"));
+});
+
+
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment()) {
     app.UseHsts();
+} else{
+    app.UseDeveloperExceptionPage();
 }
 
 app.UseHttpsRedirection();
