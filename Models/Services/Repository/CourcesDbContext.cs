@@ -11,16 +11,16 @@ namespace CorsoNetCore.Models.Services.Repository
     {
         public CourcesDbContext()
         {
-            
+
         }
 
         public CourcesDbContext(DbContextOptions<CourcesDbContext> options) : base(options)
         {
-            
+
         }
 
-        public virtual DbSet<Course> Courses {get;set;}
-        public virtual DbSet<Lesson> Lessons {get;set;}
+        public virtual DbSet<Course> Courses { get; set; }
+        //public virtual DbSet<Lesson> Lessons {get;set;}
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -29,10 +29,16 @@ namespace CorsoNetCore.Models.Services.Repository
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<Course>(entity => {
-                
+            modelBuilder.Entity<Course>(entity =>
+            {
+                entity.OwnsOne(course => course.CurrentPrice, builder =>
+                {
+                    builder.Property(money => money.Currency).HasConversion<string>();
+                });
+                entity.OwnsOne(course => course.FullPrice, builder =>
+                {
+                    builder.Property(money => money.Currency).HasConversion<string>();
+                });
             });
         }
     }

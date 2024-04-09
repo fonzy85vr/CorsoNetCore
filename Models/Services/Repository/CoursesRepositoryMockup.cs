@@ -18,7 +18,7 @@ namespace CorsoNetCore.Models.Services.Repository
                 var price = Convert.ToDecimal(randPrice.NextDouble() * 10 + 10);
                yield return new CourseViewModel{
                     Author = "Nome Cognome",
-                    Id = Guid.NewGuid(),
+                    Id = 1,
                     CurrentPrice = new Money{
                         Amount = price,
                         Currency = Currency.EUR

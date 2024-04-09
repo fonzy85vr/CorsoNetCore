@@ -4,6 +4,6 @@ namespace CorsoNetCore.Models.Services.Service
 {
     public interface ICoursesService
     {
-        List<CourseViewModel> GetCourses();
+        Task<List<CourseViewModel>> GetCourses();
     }
 }

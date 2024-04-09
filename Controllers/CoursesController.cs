@@ -12,10 +12,10 @@ namespace CorsoNetCore.Controllers
             _courcesBL = courcesBL;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             ViewData["Title"] = "Elenco dei corsi";
-            var courses = _courcesBL.GetCourses();
+            var courses = await _courcesBL.GetCourses();
             return View(courses);
         }
 

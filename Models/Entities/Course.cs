@@ -10,6 +10,7 @@ namespace CorsoNetCore.Models.Entities
         public string ImagePath { get; set; }
         public string Author { get; set; }
         public string Email { get; set; }
+        public double Rating { get; set; }
         public Money CurrentPrice { get; set; }
         public Money FullPrice { get; set; }
     }
