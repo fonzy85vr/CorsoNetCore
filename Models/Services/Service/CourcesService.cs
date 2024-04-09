@@ -18,7 +18,7 @@ namespace CorsoNetCore.Models.Services.Service
         public async Task<List<CourseViewModel>> GetCourses()
         {
             _logger.LogInformation("Recuperiamo la lista dei corsi");
-            var queryCourses = _dbContext.Courses.Select(course => 
+            var queryCourses = _dbContext.Courses.AsNoTracking().Select(course => 
             new CourseViewModel{
                     Author = course.Author,
                     CurrentPrice = course.CurrentPrice,
