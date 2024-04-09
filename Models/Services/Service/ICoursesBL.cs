@@ -1,8 +1,8 @@
 using CorsoNetCore.Models.ViewModel;
 
-namespace CorsoNetCore.Models.Services.BusinessLogic
+namespace CorsoNetCore.Models.Services.Service
 {
-    public interface ICoursesBL
+    public interface ICoursesService
     {
         List<CourseViewModel> GetCourses();
     }

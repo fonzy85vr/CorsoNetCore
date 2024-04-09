@@ -2,9 +2,9 @@ using CorsoNetCore.Models.DataTypes;
 using CorsoNetCore.Models.DataTypes.Enums;
 using CorsoNetCore.Models.ViewModel;
 
-namespace CorsoNetCore.Models.Services.BusinessLogic
+namespace CorsoNetCore.Models.Services.Service
 {
-    public class CoursesBL : ICoursesBL
+    public class CoursesService : ICoursesService
     {
         public List<CourseViewModel> GetCourses()
         {
