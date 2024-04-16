@@ -23,9 +23,9 @@ namespace CorsoNetCore.Migrations
                     Email = table.Column<string>(type: "TEXT", nullable: false),
                     Rating = table.Column<double>(type: "REAL", nullable: false),
                     CurrentPrice_Currency = table.Column<string>(type: "TEXT", nullable: false),
-                    CurrentPrice_Amount = table.Column<decimal>(type: "TEXT", nullable: false),
+                    CurrentPrice_Amount = table.Column<decimal>(type: "NUMERIC", nullable: false),
                     FullPrice_Currency = table.Column<string>(type: "TEXT", nullable: false),
-                    FullPrice_Amount = table.Column<decimal>(type: "TEXT", nullable: false)
+                    FullPrice_Amount = table.Column<decimal>(type: "NUMERIC", nullable: false)
                 },
                 constraints: table =>
                 {
