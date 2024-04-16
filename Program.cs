@@ -1,5 +1,6 @@
 using CorsoNetCore.Models.Services.Repository;
 using CorsoNetCore.Models.Services.Service;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,7 +17,8 @@ builder.Services.AddDbContextPool<CourcesDbContext>(options => {
     options.UseSqlite(builder.Configuration.GetConnectionString("Default"));
 });
 
-
+builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<CourcesDbContext>();
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
@@ -36,5 +38,10 @@ app.UseStaticFiles();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Courses}/{action=Index}/{id?}");
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapRazorPages();
 
 app.Run();
