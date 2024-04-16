@@ -1,7 +1,6 @@
 using CorsoNetCore.Models.Entities;
 using CorsoNetCore.Models.Services.Repository;
 using CorsoNetCore.Models.Services.Service;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +18,8 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
 }).AddEntityFrameworkStores<CourcesDbContext>();
 builder.Services.AddRazorPages();
+
+builder.Services.AddResponseCaching();
 
 var app = builder.Build();
 
@@ -41,6 +42,8 @@ app.MapControllerRoute(
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseResponseCaching();
 
 app.MapRazorPages();
 
