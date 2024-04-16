@@ -1,7 +1,6 @@
 using CorsoNetCore.Models.Entities;
 using CorsoNetCore.Models.Services.Repository;
 using CorsoNetCore.Models.Services.Service;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
