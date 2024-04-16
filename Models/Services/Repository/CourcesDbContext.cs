@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CorsoNetCore.Models.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CorsoNetCore.Models.Services.Repository
 {
-    public partial class CourcesDbContext : DbContext
+    public partial class CourcesDbContext : IdentityDbContext<ApplicationUser>
     {
         public CourcesDbContext(DbContextOptions<CourcesDbContext> options) : base(options)
         {
@@ -22,6 +23,8 @@ namespace CorsoNetCore.Models.Services.Repository
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Course>(entity =>
             {
                 entity.ToTable("Courses");
