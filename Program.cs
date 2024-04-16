@@ -7,11 +7,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddMvc()
-#if DEBUG
-    .AddRazorRuntimeCompilation()
-#endif
-;
+builder.Services.AddMvc();
 builder.Services.AddTransient<ICoursesService, CoursesService>();
 
 builder.Services.AddDbContextPool<CourcesDbContext>(options => {
