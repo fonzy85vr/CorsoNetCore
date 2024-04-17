@@ -4,6 +4,6 @@ namespace CorsoNetCore.Models.Services.Service
 {
     public interface ICoursesService
     {
-        Task<List<CourseViewModel>> GetCourses(BaseSearchInputModel model);
+        Task<PaginatedResult<CourseViewModel>> GetCourses(PaginationModel model);
     }
 }

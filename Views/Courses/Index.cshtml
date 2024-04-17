@@ -1,28 +1,32 @@
 ﻿@using CorsoNetCore.Models.ViewModel
-@model List<CourseViewModel>
+@model PaginatedResult<CourseViewModel>
+@{
+    var totalPages = Math.Ceiling((decimal)Model.TotalElements / Model.ElementsPerPage);
+}
+
+
 <h1>@ViewData["Title"]</h1>
 
-@foreach (var course in Model)
+@foreach (var course in Model.Items)
 {
     <partial name="Course/CourseLine" model="@course" />
 }
 
 <nav aria-label="Page navigation example">
     <ul class="pagination mt-5 d-flex justify-content-center">
-        <li class="page-item disabled">
-            <a class="page-link disabled">Previous</a>
-        </li>
-        <li class="page-item active">
-            <a class="page-link" asp-route-page="1">1</a>
-        </li>
         <li class="page-item">
-            <a class="page-link" asp-route-page="2">2</a>
+            <a class="page-link @(Model.Page == 1 ? "disabled" : "")" asp-route-page="@(Model.Page - 1)">Previous</a>
         </li>
-        <li class="page-item">
-            <a class="page-link" asp-route-page="3">3</a>
+
+        @for(var i = 1; i <= totalPages; i++){
+        <li class="page-item @(Model.Page == i ? "active" : "")">
+            <a class="page-link" asp-route-page="@i">@i</a>
         </li>
+        }
+        
+        
         <li class="page-item">
-            <a class="page-link" href="#">Next</a>
+            <a class="page-link @(Model.Page == totalPages ? "disabled" : "")" asp-route-page="@(Model.Page + 1)">Next</a>
         </li>
     </ul>
 </nav>

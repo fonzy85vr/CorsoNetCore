@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 
 namespace CorsoNetCore.Models.ViewModel
 {
-    public class BaseSearchInputModel
+    public class PaginationModel
     {
         public int Page { get; set; }
         public int ElementsPerPage { get; set; }
+        public int TotalElements {get;set;}
 
-        public BaseSearchInputModel() {
+        public PaginationModel() {
             Page = 1;
             ElementsPerPage = 10;
         }
