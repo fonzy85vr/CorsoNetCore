@@ -34,13 +34,13 @@ namespace CorsoNetCore.Models.Services.Service
 
             var toRet = new PaginatedResult<CourseViewModel>(){
                 Page = model.Page,
-                ElementsPerPage = model.ElementsPerPage
+                ElementsPerPage = model.ElementsPerPage,
+                Offset = model.Offset
             };
-            var skipValue = model.ElementsPerPage * (model.Page - 1);
-            
+
             toRet.TotalElements = queryCourses.Count();
-            toRet.TotalPages = (int)Math.Ceiling((decimal)toRet.TotalElements / toRet.ElementsPerPage);
-            queryCourses = queryCourses.Skip(skipValue).Take(model.ElementsPerPage);
+
+            queryCourses = queryCourses.Skip(toRet.Offset).Take(model.ElementsPerPage);
 
             toRet.Items = await queryCourses.ToListAsync();
             

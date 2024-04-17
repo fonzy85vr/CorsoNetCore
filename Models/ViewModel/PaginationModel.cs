@@ -6,5 +6,6 @@ namespace CorsoNetCore.Models.ViewModel
         public int ElementsPerPage { get; set; }
         public int TotalElements { get; set; }
         public int TotalPages { get; set; }
+        public int Offset { get; set; }
     }
 }
