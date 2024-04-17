@@ -16,7 +16,7 @@ namespace CorsoNetCore.Controllers
         public async Task<IActionResult> Index(PaginationModel model)
         {
             ViewData["Title"] = "Elenco dei corsi";
-            var courses = await _courcesBL.GetCourses(model);
+            var courses = await _courcesBL.Search(model);
             return View(courses);
         }
 

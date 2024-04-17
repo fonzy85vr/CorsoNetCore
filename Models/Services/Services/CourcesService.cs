@@ -1,21 +1,23 @@
 using CorsoNetCore.Models.Services.Repository;
+using CorsoNetCore.Models.Services.Services.Common;
 using CorsoNetCore.Models.ViewModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace CorsoNetCore.Models.Services.Service
 {
-    public class CoursesService : ICoursesService
+    public class CourseSearchService : SearchService<CourseViewModel>, ICoursesService
     {
         private readonly CourcesDbContext _dbContext;
-        private readonly ILogger<CoursesService> _logger;
+        private readonly ILogger<CourseSearchService> _logger;
 
-        public CoursesService( ILogger<CoursesService> logger, CourcesDbContext dbContext)
+        public CourseSearchService( ILogger<CourseSearchService> logger, CourcesDbContext dbContext)
         {
             _dbContext = dbContext;
             _logger = logger;
         }
 
-        public async Task<PaginatedResult<CourseViewModel>> GetCourses(PaginationModel model)
+
+        protected override async Task<PaginatedResult<CourseViewModel>> SearchInternal(PaginationModel model)
         {
             _logger.LogInformation("Recuperiamo la lista dei corsi");
             var queryCourses = _dbContext.Courses.AsNoTracking().Select(course => 
@@ -31,11 +33,13 @@ namespace CorsoNetCore.Models.Services.Service
             );
 
             var toRet = new PaginatedResult<CourseViewModel>(){
-                Page = model.Page
+                Page = model.Page,
+                ElementsPerPage = model.ElementsPerPage
             };
-            var skipValue = (model.ElementsPerPage * (model.Page - 1));
+            var skipValue = model.ElementsPerPage * (model.Page - 1);
             
             toRet.TotalElements = queryCourses.Count();
+            toRet.TotalPages = (int)Math.Ceiling((decimal)toRet.TotalElements / toRet.ElementsPerPage);
             queryCourses = queryCourses.Skip(skipValue).Take(model.ElementsPerPage);
 
             toRet.Items = await queryCourses.ToListAsync();

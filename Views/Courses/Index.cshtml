@@ -1,9 +1,5 @@
 ﻿@using CorsoNetCore.Models.ViewModel
 @model PaginatedResult<CourseViewModel>
-@{
-    var totalPages = Math.Ceiling((decimal)Model.TotalElements / Model.ElementsPerPage);
-}
-
 
 <h1>@ViewData["Title"]</h1>
 
@@ -12,21 +8,4 @@
     <partial name="Course/CourseLine" model="@course" />
 }
 
-<nav aria-label="Page navigation example">
-    <ul class="pagination mt-5 d-flex justify-content-center">
-        <li class="page-item">
-            <a class="page-link @(Model.Page == 1 ? "disabled" : "")" asp-route-page="@(Model.Page - 1)">Previous</a>
-        </li>
-
-        @for(var i = 1; i <= totalPages; i++){
-        <li class="page-item @(Model.Page == i ? "active" : "")">
-            <a class="page-link" asp-route-page="@i">@i</a>
-        </li>
-        }
-        
-        
-        <li class="page-item">
-            <a class="page-link @(Model.Page == totalPages ? "disabled" : "")" asp-route-page="@(Model.Page + 1)">Next</a>
-        </li>
-    </ul>
-</nav>
+<partial name="Common/Pagination" model="@Model"></partial>
