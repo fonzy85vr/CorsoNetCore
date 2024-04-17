@@ -2,7 +2,7 @@ using CorsoNetCore.Models.DataTypes;
 
 namespace CorsoNetCore.Models.ViewModel
 {
-    public class CourseViewModel
+    public class CourseViewModel : PaginationModel
     {
         public int Id { get; set; }
         public string Title { get; set; }

@@ -1,7 +1,11 @@
 ﻿@using CorsoNetCore.Models.ViewModel
-@model List<CourseViewModel>
+@model PaginatedResult<CourseViewModel>
+
 <h1>@ViewData["Title"]</h1>
 
-@foreach (var course in Model){
+@foreach (var course in Model.Items)
+{
     <partial name="Course/CourseLine" model="@course" />
 }
+
+<partial name="Common/Pagination" model="@Model"></partial>
