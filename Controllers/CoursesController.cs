@@ -1,4 +1,5 @@
 ﻿using CorsoNetCore.Models.Services.Service;
+using CorsoNetCore.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CorsoNetCore.Controllers
@@ -12,10 +13,10 @@ namespace CorsoNetCore.Controllers
             _courcesBL = courcesBL;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(BaseSearchInputModel model)
         {
             ViewData["Title"] = "Elenco dei corsi";
-            var courses = await _courcesBL.GetCourses();
+            var courses = await _courcesBL.GetCourses(model);
             return View(courses);
         }
 

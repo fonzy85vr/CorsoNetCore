@@ -15,7 +15,7 @@ namespace CorsoNetCore.Models.Services.Service
             _logger = logger;
         }
 
-        public async Task<List<CourseViewModel>> GetCourses()
+        public async Task<List<CourseViewModel>> GetCourses(BaseSearchInputModel model)
         {
             _logger.LogInformation("Recuperiamo la lista dei corsi");
             var queryCourses = _dbContext.Courses.AsNoTracking().Select(course => 
@@ -29,6 +29,11 @@ namespace CorsoNetCore.Models.Services.Service
                     Title = course.Title
                 }
             );
+
+            var skipValue = (model.ElementsPerPage * (model.Page - 1));
+
+            queryCourses = queryCourses.Skip(skipValue).Take(model.ElementsPerPage);
+
             var courses = await queryCourses.ToListAsync();
             
             return courses;
