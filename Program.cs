@@ -1,25 +1,9 @@
-using CorsoNetCore.Models.Entities;
-using CorsoNetCore.Models.Services.Repository;
-using CorsoNetCore.Models.Services.Service;
-using Microsoft.EntityFrameworkCore;
+using CorsoNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddMvc();
-builder.Services.AddTransient<ICoursesService, CourseSearchService>();
-
-builder.Services.AddDbContextPool<CourcesDbContext>(options => {
-    options.UseSqlite(builder.Configuration.GetConnectionString("Default"));
-});
-
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
-    options.Lockout.MaxFailedAccessAttempts = 3;
-    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-}).AddEntityFrameworkStores<CourcesDbContext>();
-builder.Services.AddRazorPages();
-
-builder.Services.AddResponseCaching();
+Startup.SetupServices(builder);
 
 var app = builder.Build();
 

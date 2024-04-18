@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using CorsoNetCore.Models.ViewModel;
 
-namespace CorsoNetCore.Models.Services.Services.Common
+namespace CorsoNetCore.Models.Services.ApplicationLayer.Common
 {
     public abstract class SearchService<T> where T : class
     {

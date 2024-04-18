@@ -1,7 +1,7 @@
-using CorsoNetCore.Models.Services.Services.Common;
+using CorsoNetCore.Models.Services.ApplicationLayer.Common;
 using CorsoNetCore.Models.ViewModel;
 
-namespace CorsoNetCore.Models.Services.Service
+namespace CorsoNetCore.Models.Services.ApplicationLayer
 {
     public interface ICoursesService : ISearchService<CourseViewModel>
     {
