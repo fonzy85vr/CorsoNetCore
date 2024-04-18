@@ -1,6 +1,3 @@
-using CorsoNetCore.Models.Services.ApplicationLayer;
-using CorsoNetCore.Models.Services.ApplicationLayer;
-
 namespace CorsoNetCore.Models.Services.ApplicationLayer
 {
     public static class Startup
