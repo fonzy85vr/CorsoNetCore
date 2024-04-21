@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace CorsoNetCore.Customizations.TagHelpers
 {
-    public class Price : TagHelper
+    public class PriceTagHelper : TagHelper
     {
         public Money FullPrice { get; set; }
         public Money CurrentPrice { get; set; }

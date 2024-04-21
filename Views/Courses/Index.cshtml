@@ -5,22 +5,13 @@
 
 <div class="row">
     <div class="col-md-5 offset-md-1">
-        <a class="order" asp-route-OrderBy="Title" asp-route-IsAscending="@(Model.OrderBy == "Title" && Model.IsAscending.Value ? "false" : "true")">
-            Titolo @if(Model.OrderBy == "Title"){
-            <i class="fa-solid @(Model.IsAscending.HasValue &&  Model.IsAscending.Value ? "fa-sort-up" : "fa-sort-down")"></i>
-        }</a>
+        <order-link order-by="Title" model="@Model">Titolo </order-link>
     </div>
     <div class="col-md-2">
-        <a class="order" asp-route-OrderBy="Rating" asp-route-IsAscending="@(Model.OrderBy == "Rating" && Model.IsAscending.Value ? "false" : "true")">
-            Votazione @if(Model.OrderBy == "Rating"){
-            <i class="fa-solid @(Model.IsAscending.HasValue &&  Model.IsAscending.Value ? "fa-sort-up" : "fa-sort-down")"></i>
-        }</a>
+        <order-link order-by="Rating" model="@Model">Valutazione </order-link>
     </div>
     <div class="col-md-2">
-        <a class="order" asp-route-OrderBy="Prize" asp-route-IsAscending="@(Model.OrderBy == "Prize" && Model.IsAscending.Value ? "false" : "true")">
-            Prezzo @if(Model.OrderBy == "Prize"){
-            <i class="fa-solid @(Model.IsAscending.HasValue &&  Model.IsAscending.Value ? "fa-sort-up" : "fa-sort-down")"></i>
-        }</a>
+        <order-link order-by="Prize" model="@Model">Prezzo </order-link>
     </div>
     <div class="col-md-2"></div>
 </div>
