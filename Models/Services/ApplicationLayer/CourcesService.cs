@@ -1,5 +1,4 @@
 using CorsoNetCore.Models.Services.Repository;
-using CorsoNetCore.Models.Services.ApplicationLayer;
 using CorsoNetCore.Models.Services.ApplicationLayer.Common;
 using CorsoNetCore.Models.ViewModel;
 using Microsoft.EntityFrameworkCore;
