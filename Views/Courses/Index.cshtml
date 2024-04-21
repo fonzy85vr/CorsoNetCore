@@ -3,9 +3,32 @@
 
 <h1>@ViewData["Title"]</h1>
 
+<div class="row">
+    <div class="col-md-5 offset-md-1">
+        <a class="order" asp-route-OrderBy="Title" asp-route-IsAscending="@(Model.OrderBy == "Title" && Model.IsAscending.Value ? "false" : "true")">
+            Titolo @if(Model.OrderBy == "Title"){
+            <i class="fa-solid @(Model.IsAscending.HasValue &&  Model.IsAscending.Value ? "fa-sort-up" : "fa-sort-down")"></i>
+        }</a>
+    </div>
+    <div class="col-md-2">
+        <a class="order" asp-route-OrderBy="Rating" asp-route-IsAscending="@(Model.OrderBy == "Rating" && Model.IsAscending.Value ? "false" : "true")">
+            Votazione @if(Model.OrderBy == "Rating"){
+            <i class="fa-solid @(Model.IsAscending.HasValue &&  Model.IsAscending.Value ? "fa-sort-up" : "fa-sort-down")"></i>
+        }</a>
+    </div>
+    <div class="col-md-2">
+        <a class="order" asp-route-OrderBy="Prize" asp-route-IsAscending="@(Model.OrderBy == "Prize" && Model.IsAscending.Value ? "false" : "true")">
+            Prezzo @if(Model.OrderBy == "Prize"){
+            <i class="fa-solid @(Model.IsAscending.HasValue &&  Model.IsAscending.Value ? "fa-sort-up" : "fa-sort-down")"></i>
+        }</a>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
 @foreach (var course in Model.Items)
 {
     <partial name="Course/CourseLine" model="@course" />
 }
+
 
 <partial name="Common/Pagination" model="@Model"></partial>

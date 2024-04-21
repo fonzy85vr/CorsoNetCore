@@ -22,6 +22,8 @@ namespace CorsoNetCore.Models.Services.ApplicationLayer.Common
             toRet.ElementsPerPage = Math.Max(10, model.ElementsPerPage);
             toRet.TotalElements = model.TotalElements;
             toRet.Offset = toRet.ElementsPerPage * (toRet.Page - 1);
+            toRet.OrderBy = model.OrderBy ?? "Title";
+            toRet.IsAscending = model.IsAscending ?? true;
 
             return toRet;
         }
