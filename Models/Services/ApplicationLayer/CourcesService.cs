@@ -44,8 +44,6 @@ namespace CorsoNetCore.Models.Services.ApplicationLayer
 
             toRet.TotalElements = queryCourses.Count();
 
-            queryCourses = queryCourses.Skip(toRet.Offset).Take(model.ElementsPerPage);
-
             queryCourses = (model.OrderBy, model.IsAscending) switch
             {
                 ("Title", true) => queryCourses.OrderBy(course => course.Title),
@@ -56,6 +54,8 @@ namespace CorsoNetCore.Models.Services.ApplicationLayer
                 ("Prize", false) => queryCourses.OrderByDescending(course => course.CurrentPrice.Amount),
                 _ => queryCourses.OrderBy(course => course.Title)
             };
+
+            queryCourses = queryCourses.Skip(toRet.Offset).Take(model.ElementsPerPage);
 
             toRet.Items = await queryCourses.ToListAsync();
 
