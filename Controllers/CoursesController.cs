@@ -8,7 +8,7 @@ namespace CorsoNetCore.Controllers
     {
         private readonly ICoursesService _courcesBL;
 
-        public CoursesController(ICoursesService courcesBL)
+        public CoursesController(ICachedCourseService courcesBL)
         {
             _courcesBL = courcesBL;
         }
