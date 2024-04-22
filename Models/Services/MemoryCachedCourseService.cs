@@ -13,9 +13,8 @@ namespace CorsoNetCore.Models.Services
             _cache = cache;
             _service = service;
         }
-        public Task<PaginatedResult<CourseViewModel>> Search(PaginationModel model)
+        public Task<PaginatedResult<CourseViewModel>?> Search(PaginationModel model)
         {
-#pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
             if (model.Page < 3)
             {
                 return _cache.GetOrCreateAsync($"Courses_Page{model.Page}_orderBy{model.OrderBy}-{model.IsAscending}", cacheEntry =>
@@ -25,7 +24,6 @@ namespace CorsoNetCore.Models.Services
                     return _service.Search(model);
                 });
             }
-#pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
 
             return _service.Search(model);
         }

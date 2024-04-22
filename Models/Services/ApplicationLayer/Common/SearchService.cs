@@ -4,7 +4,7 @@ namespace CorsoNetCore.Models.Services.ApplicationLayer.Common
 {
     public abstract class SearchService<T> where T : class
     {
-        public async Task<PaginatedResult<T>> Search(PaginationModel model){
+        public async Task<PaginatedResult<T>?> Search(PaginationModel model){
             var fixedModel = FixModel(model);
             var toRet = await SearchInternal(fixedModel);
             toRet = PostSearch(toRet);
