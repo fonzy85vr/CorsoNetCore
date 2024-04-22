@@ -13,7 +13,7 @@ namespace CorsoNetCore.Models.Services.ApplicationLayer.Common
         }
 
         protected abstract Task<PaginatedResult<T>> SearchInternal(PaginationModel model);
-
+                                       
         protected virtual PaginationModel FixModel(PaginationModel model){
             var toRet = new PaginationModel();
 
