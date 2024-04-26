@@ -5,5 +5,6 @@ namespace CorsoNetCore.Models.Services.ApplicationLayer
 {
     public interface ICoursesService : ISearchService<CourseViewModel>
     {
+        Task<CourseDetailViewModel?> GetDetail(int id);
     }
 }

@@ -1,3 +1,4 @@
+using CorsoNetCore.Models.DataTypes;
 using CorsoNetCore.Models.Services.ApplicationLayer.Common;
 using CorsoNetCore.Models.Services.Repository;
 using CorsoNetCore.Models.ViewModel;
@@ -16,6 +17,22 @@ namespace CorsoNetCore.Models.Services.ApplicationLayer
             _logger = logger;
         }
 
+        public async Task<CourseDetailViewModel?> GetDetail(int id)
+        {
+            var toRet = await _dbContext.Courses.AsNoTracking().Where(course => course.Id == id).Select(course => 
+                new CourseDetailViewModel{
+                    Author = course.Author,
+                    CurrentPrice = course.CurrentPrice,
+                    Description = course.Description,
+                    Id = course.Id,
+                    ImagePath = course.ImagePath,
+                    Price = course.FullPrice,
+                    Title = course.Title,
+                    Rating = course.Rating
+                }).FirstOrDefaultAsync();
+
+            return toRet;
+        }
 
         protected override async Task<PaginatedResult<CourseViewModel>> SearchInternal(PaginationModel model)
         {

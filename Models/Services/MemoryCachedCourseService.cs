@@ -13,6 +13,17 @@ namespace CorsoNetCore.Models.Services
             _cache = cache;
             _service = service;
         }
+
+        public Task<CourseDetailViewModel?> GetDetail(int id)
+        {
+            return _cache.GetOrCreateAsync($"Courses_{id}", cacheEntry =>
+                {
+                    cacheEntry.SetAbsoluteExpiration(TimeSpan.FromSeconds(60));
+
+                    return _service.GetDetail(id);
+                });
+        }
+
         public Task<PaginatedResult<CourseViewModel>?> Search(PaginationModel model)
         {
             if (model.Page < 3)

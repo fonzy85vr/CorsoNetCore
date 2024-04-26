@@ -20,9 +20,15 @@ namespace CorsoNetCore.Controllers
             return View(courses);
         }
 
-        public IActionResult Detail(string id)
+        public async Task<IActionResult> Detail(int id)
         {
-            return View();
+            var course = await _courcesBL.GetDetail(id);
+
+            if(course != null){
+                ViewData["Title"] = course.Title;
+            }
+            
+            return View(course);
         }
     }
 }
