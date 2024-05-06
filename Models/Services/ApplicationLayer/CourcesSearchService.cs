@@ -27,7 +27,13 @@ namespace CorsoNetCore.Models.Services.ApplicationLayer
                     ImagePath = course.ImagePath,
                     Price = course.FullPrice,
                     Title = course.Title,
-                    Rating = course.Rating
+                    Rating = course.Rating,
+                    Lessons = course.Lessons.Select(lesson => new LessonViewModel{
+                        Description = lesson.Description,
+                        Id = lesson.Id,
+                        Title = lesson.Title,
+                        Duration = lesson.Duration
+                    }).ToList()
                 }).FirstOrDefaultAsync();
 
             return toRet;
