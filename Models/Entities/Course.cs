@@ -13,5 +13,7 @@ namespace CorsoNetCore.Models.Entities
         public double Rating { get; set; }
         public Money CurrentPrice { get; set; }
         public Money FullPrice { get; set; }
+
+        public List<Lesson> Lessons {get; set;}
     }
 }
