@@ -2,21 +2,29 @@
 
 <section>
     <div class="row">
-        <div class="col-md-8 mt-3">
+        <div class="col-md-9 mt-3">
             <h1>@ViewData["Title"]</h1>
         </div>
-        <div class="col-md-4 d-grid gap-2 align-items-center">
+        <div class="col-md-3 d-grid gap-2 align-items-center">
             <a class="btn btn-warning btn-lg" role="button">ISCRIVITI</a>
         </div>
 
-        <div class="col-md-8">
+        <div class="col-md-9">
             <div>@Model.Description</div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <aside>
-                @Model.Author
-                <div>
+                <author>
+                    @Model.Author
+                </author>
+                <div class="rating">
                     <rating value="@Model.Rating"></rating>
+                </div>
+                <div class="price">
+                    <price current-price="@Model.CurrentPrice" full-price="@Model.Price"></price>
+                </div>
+                <div>
+                    <img src="@Model.ImagePath" width="223" height="223"/>
                 </div>
             </aside>
         </div>

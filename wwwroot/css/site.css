@@ -8,6 +8,27 @@ body {
 body>.container {
   flex: 1;
 }
+
+aside {
+  background-color: #f2ededf0;
+  padding: 1em;
+  height: 100%;
+}
+
+aside author {
+  font-style: italic;
+  font-size: 1em;
+}
+
+.price::first-line {
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+.price s {
+  font-size: 1.1em;
+}
+
 h1 {
   margin-top: 0.7em;
   margin-bottom: 0.7em;
@@ -26,7 +47,7 @@ author {
 }
 
 .rating {
-  color: red;
+  color: #ffc107;
 }
 
 footer {
