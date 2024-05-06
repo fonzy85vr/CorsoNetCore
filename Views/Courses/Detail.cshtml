@@ -41,8 +41,18 @@
             @lesson.Title
         </div>
         <div class="col-2">
-            @lesson.Duration
+            <i class="far fa-clock"></i> @lesson.Duration
         </div>
     </div>
     }
+
+    <hr>
+    <div class="row totalRow">
+        <div class="col-10">
+            Totale
+        </div>
+        <div class="col-2">
+            @Model.TotalLessonDuration
+        </div>
+    </div>
 </section>

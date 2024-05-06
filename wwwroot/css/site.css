@@ -54,6 +54,10 @@ author {
   margin: 0.5em 0;
 }
 
+.totalRow {
+  font-weight: bold;
+}
+
 footer {
   margin-top: 3em;
   padding-top: 1em;
