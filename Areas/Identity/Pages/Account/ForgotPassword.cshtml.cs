@@ -15,7 +15,6 @@ using Microsoft.Extensions.Logging;
 
 namespace CorsoNetCore.Areas.Identity.Pages.Account
 {
-    [IgnoreAntiforgeryToken]
     public class ForgotPasswordModel : PageModel
     {
         private readonly ILogger<ForgotPasswordModel> _logger;
