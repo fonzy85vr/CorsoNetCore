@@ -2,6 +2,9 @@ using CorsoNetCore.Models.Entities;
 using ApplicationLayer = CorsoNetCore.Models.Services.ApplicationLayer;
 using CorsoNetCore.Models.Services.Repository;
 using Microsoft.EntityFrameworkCore;
+using CorsoNetCore.Models.Options;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CorsoNetCore
 {
@@ -21,12 +24,17 @@ namespace CorsoNetCore
                 options.Lockout.MaxFailedAccessAttempts = 3;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
             }).AddEntityFrameworkStores<CourcesDbContext>();
-            builder.Services.AddRazorPages();
 
             builder.Services.AddResponseCaching();
 
             // registro i servizi applicativi
             ApplicationLayer.Startup.SetupServices(builder);
+
+            builder.Services.AddSingleton<IEmailSender, MailService>();
+        }
+
+        public static void SetupOptions (WebApplicationBuilder builder){
+            builder.Services.Configure<SmtpOption>(builder.Configuration.GetSection("Smtp"));
         }
     }
 }

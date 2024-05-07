@@ -2,8 +2,13 @@ using CorsoNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddRazorPages();
+
 // Add services to the container.
 Startup.SetupServices(builder);
+
+// Inizialize options
+Startup.SetupOptions(builder);
 
 var app = builder.Build();
 
