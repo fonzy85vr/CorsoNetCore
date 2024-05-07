@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace CorsoNetCore.Customizations.TagHelpers
 {
-    public class Rating : TagHelper
+    public class RatingTagHelper : TagHelper
     {
         public double Value { get; set; }
         public override void Process(TagHelperContext context, TagHelperOutput output)

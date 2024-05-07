@@ -1,4 +1,4 @@
-﻿using CorsoNetCore.Models.Services.Service;
+﻿using CorsoNetCore.Models.Services.ApplicationLayer;
 using CorsoNetCore.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,7 +8,7 @@ namespace CorsoNetCore.Controllers
     {
         private readonly ICoursesService _courcesBL;
 
-        public CoursesController(ICoursesService courcesBL)
+        public CoursesController(ICachedCourseService courcesBL)
         {
             _courcesBL = courcesBL;
         }
@@ -20,9 +20,15 @@ namespace CorsoNetCore.Controllers
             return View(courses);
         }
 
-        public IActionResult Detail(string id)
+        public async Task<IActionResult> Detail(int id)
         {
-            return View();
+            var course = await _courcesBL.GetDetail(id);
+
+            if(course != null){
+                ViewData["Title"] = course.Title;
+            }
+            
+            return View(course);
         }
     }
 }

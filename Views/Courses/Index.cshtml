@@ -3,9 +3,22 @@
 
 <h1>@ViewData["Title"]</h1>
 
+<div class="row">
+    <div class="col-md-5 offset-md-1">
+        <order-link order-by="Title" model="@Model">Titolo </order-link>
+    </div>
+    <div class="col-md-2">
+        <order-link order-by="Rating" model="@Model">Valutazione </order-link>
+    </div>
+    <div class="col-md-2">
+        <order-link order-by="Prize" model="@Model">Prezzo </order-link>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
 @foreach (var course in Model.Items)
 {
     <partial name="Course/CourseLine" model="@course" />
 }
 
-<partial name="Common/Pagination" model="@Model"></partial>
+<vc:pagination-bar ></vc:pagination-bar>

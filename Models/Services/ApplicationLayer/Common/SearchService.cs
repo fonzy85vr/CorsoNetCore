@@ -1,14 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using CorsoNetCore.Models.ViewModel;
 
-namespace CorsoNetCore.Models.Services.Services.Common
+namespace CorsoNetCore.Models.Services.ApplicationLayer.Common
 {
     public abstract class SearchService<T> where T : class
     {
-        public async Task<PaginatedResult<T>> Search(PaginationModel model){
+        public async Task<PaginatedResult<T>?> Search(PaginationModel model){
             var fixedModel = FixModel(model);
             var toRet = await SearchInternal(fixedModel);
             toRet = PostSearch(toRet);
@@ -17,7 +13,7 @@ namespace CorsoNetCore.Models.Services.Services.Common
         }
 
         protected abstract Task<PaginatedResult<T>> SearchInternal(PaginationModel model);
-
+                                       
         protected virtual PaginationModel FixModel(PaginationModel model){
             var toRet = new PaginationModel();
 
@@ -26,6 +22,8 @@ namespace CorsoNetCore.Models.Services.Services.Common
             toRet.ElementsPerPage = Math.Max(10, model.ElementsPerPage);
             toRet.TotalElements = model.TotalElements;
             toRet.Offset = toRet.ElementsPerPage * (toRet.Page - 1);
+            toRet.OrderBy = model.OrderBy ?? "Title";
+            toRet.IsAscending = model.IsAscending ?? true;
 
             return toRet;
         }

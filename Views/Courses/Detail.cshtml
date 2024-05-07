@@ -1,5 +1,58 @@
-﻿<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iusto eum corporis fugiat, minus dolorum pariatur. Optio sapiente iste dolorum vel, pariatur eaque culpa soluta officiis. Velit vel optio dolorem illum.</p>
-<p>Itaque sint alias soluta impedit fuga quod, id quis facilis, adipisci expedita quisquam quibusdam sit consequatur ipsam pariatur officiis iste assumenda explicabo laboriosam cum incidunt. Dolorem minus aperiam nulla fugiat.</p>
-<p>Aliquid, alias. Pariatur, ipsum quibusdam cumque, autem suscipit soluta asperiores illo perferendis dicta dolor ipsam nam id. Aliquid atque, quas harum voluptate, itaque reprehenderit quis sint minima exercitationem cum odio.</p>
-<p>Aut dicta doloribus ab quia accusantium optio quos! Et aliquid dolore, maxime reprehenderit voluptatibus aliquam iusto sunt perspiciatis voluptatem architecto debitis possimus. Alias eligendi corrupti sit nostrum nihil. Delectus, ex.</p>
-<p>Perspiciatis reprehenderit et vel, ullam doloribus iusto nisi tempore excepturi libero assumenda sed rerum, minima ipsa molestias eligendi itaque repudiandae sit tenetur a. Animi, in! Vel quos eligendi fuga possimus?</p>
+﻿@model CourseDetailViewModel;
+
+<section>
+    <div class="row">
+        <div class="col-md-9 mt-3">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+        <div class="col-md-3 d-grid gap-2 align-items-center">
+            <a class="btn btn-warning btn-lg" role="button">ISCRIVITI</a>
+        </div>
+
+        <div class="col-md-9">
+            <div>@Model.Description</div>
+        </div>
+        <div class="col-md-3">
+            <aside>
+                <author>
+                    @Model.Author
+                </author>
+                <div class="rating">
+                    <rating value="@Model.Rating"></rating>
+                </div>
+                <div class="price">
+                    <price current-price="@Model.CurrentPrice" full-price="@Model.Price"></price>
+                </div>
+                <div>
+                    <img src="@Model.ImagePath" width="223" height="223"/>
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
+
+<section class="lessonLine">
+    <h2 class="mt-4">LEZIONI (@Model.Lessons.Count)</h2>
+    
+    @foreach(var lesson in Model.Lessons) {
+    <hr>
+    <div class="row">
+        <div class="col-10">
+            @lesson.Title
+        </div>
+        <div class="col-2">
+            <i class="far fa-clock"></i> @lesson.Duration
+        </div>
+    </div>
+    }
+
+    <hr>
+    <div class="row totalRow">
+        <div class="col-10">
+            Totale
+        </div>
+        <div class="col-2">
+            @Model.TotalLessonDuration
+        </div>
+    </div>
+</section>

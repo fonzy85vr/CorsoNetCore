@@ -1,4 +1,5 @@
 using CorsoNetCore.Models.DataTypes;
+using CorsoNetCore.Models.DataTypes.Enums;
 using CorsoNetCore.Models.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +14,13 @@ namespace CorsoNetCore.Models.Services.Repository
         }
 
         public virtual DbSet<Course> Courses { get; set; }
-        //public virtual DbSet<Lesson> Lessons {get;set;}
+        public virtual DbSet<Lesson> Lessons {get;set;}
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {}
+        protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+        {
+            configurationBuilder.Properties<decimal>().HaveConversion<double>();
+            configurationBuilder.Properties<Currency>().HaveConversion<string>();
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -27,6 +31,14 @@ namespace CorsoNetCore.Models.Services.Repository
             modelBuilder.Entity<Course>(entity =>
             {
                 entity.ToTable("Courses");
+                
+                entity.HasMany(course => course.Lessons)
+                    .WithOne(lesson => lesson.Course)
+                    .HasForeignKey(lesson => lesson.COurseId);
+            });
+
+            modelBuilder.Entity<Lesson>(entity => {
+                entity.ToTable("Lessons");
             });
         }
     }
