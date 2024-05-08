@@ -1,9 +1,11 @@
 ﻿using CorsoNetCore.Models.Services.ApplicationLayer;
 using CorsoNetCore.Models.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CorsoNetCore.Controllers
 {
+    [AllowAnonymous]
     public class CoursesController : Controller
     {
         private readonly ICoursesService _courcesBL;
