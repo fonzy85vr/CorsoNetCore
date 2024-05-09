@@ -1,4 +1,9 @@
 ﻿@model CourseDetailViewModel;
+@inject IAuthorizationService _service
+@{
+    var subscribedResult = await _service.AuthorizeAsync(User, "Subscriber");
+    var isSubscribed = subscribedResult.Succeeded;
+}
 
 <section>
     <div class="row">
@@ -6,7 +11,11 @@
             <h1>@ViewData["Title"]</h1>
         </div>
         <div class="col-md-3 d-grid gap-2 align-items-center">
-            <a class="btn btn-warning btn-lg" role="button">ISCRIVITI</a>
+            @if(isSubscribed){
+                <a class="btn btn-warning btn-lg disabled" role="button" id="subscribeButton">ISCRITTO</a>
+            } else{
+                <a class="btn btn-warning btn-lg" role="button" id="subscribeButton">ISCRIVITI</a>
+            }
         </div>
 
         <div class="col-md-9">
@@ -25,6 +34,7 @@
                 </div>
                 <div>
                     <img src="@Model.ImagePath" width="223" height="223"/>
+    using Microsoft.AspNetCore.Authorization;
                 </div>
             </aside>
         </div>
@@ -56,3 +66,27 @@
         </div>
     </div>
 </section>
+
+<script>
+    $(document).ready(function(){
+        var subscribe = function() {
+            var toPost = {
+                id: @Model.Id
+            };
+            $.post('@Url.Action("Subscribe", "Courses")', toPost, function (result){
+                if(result.result){
+                    window.location.reload();
+                }
+            }).fail(function(error){
+                console.log('custom error');
+                if(error.status == 401){
+                    window.location.href = '@Url.Action("Index", "Login", new {Area = "Account"})';
+                }
+            });
+        }
+
+        $('#subscribeButton').click(function() {
+            subscribe();
+        });
+    });
+</script>

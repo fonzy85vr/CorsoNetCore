@@ -14,7 +14,8 @@ namespace CorsoNetCore.Models.Services.Repository
         }
 
         public virtual DbSet<Course> Courses { get; set; }
-        public virtual DbSet<Lesson> Lessons {get;set;}
+        public virtual DbSet<Lesson> Lessons { get; set; }
+        public virtual DbSet<CourseSubscriptions> CourseSubscriptions { get; set; }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
         {
@@ -31,7 +32,7 @@ namespace CorsoNetCore.Models.Services.Repository
             modelBuilder.Entity<Course>(entity =>
             {
                 entity.ToTable("Courses");
-                
+
                 entity.HasMany(course => course.Lessons)
                     .WithOne(lesson => lesson.Course)
                     .HasForeignKey(lesson => lesson.COurseId);
@@ -44,7 +45,8 @@ namespace CorsoNetCore.Models.Services.Repository
                     );
             });
 
-            modelBuilder.Entity<Lesson>(entity => {
+            modelBuilder.Entity<Lesson>(entity =>
+            {
                 entity.ToTable("Lessons");
             });
         }

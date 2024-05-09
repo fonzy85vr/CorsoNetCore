@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using CorsoNetCore.Models.Options;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using CorsoNetCore.Models.Authorization;
 
 namespace CorsoNetCore
 {
@@ -31,9 +33,23 @@ namespace CorsoNetCore
             ApplicationLayer.Startup.SetupServices(builder);
 
             builder.Services.AddSingleton<IEmailSender, MailService>();
+            builder.Services.AddScoped<IAuthorizationHandler, SubscriberRequirementHandler>();
+
+            builder.Services.AddAuthorization(options =>
+            {
+                options.FallbackPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+
+                options.AddPolicy("Subscriber", builder =>
+                {
+                    builder.Requirements.Add(new SubscriberRequirement());
+                });
+            });
         }
 
-        public static void SetupOptions (WebApplicationBuilder builder){
+        public static void SetupOptions(WebApplicationBuilder builder)
+        {
             builder.Services.Configure<SmtpOption>(builder.Configuration.GetSection("Smtp"));
         }
     }

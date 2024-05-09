@@ -1,15 +1,10 @@
 using CorsoNetCore;
+using CorsoNetCore.Models.Authorization;
 using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages();
-
-builder.Services.AddAuthorization(options => {
-    options.FallbackPolicy = new AuthorizationPolicyBuilder()
-        .RequireAuthenticatedUser()
-        .Build();
-});
 
 // Add services to the container.
 Startup.SetupServices(builder);
