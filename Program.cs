@@ -1,6 +1,4 @@
 using CorsoNetCore;
-using CorsoNetCore.Models.Authorization;
-using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 

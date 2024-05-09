@@ -20,7 +20,7 @@ namespace CorsoNetCore.Models.Authorization
 
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, SubscriberRequirement requirement)
         {
-            var IsSubscribed = await _service.IsSubscribed(Convert.ToInt32(_httpContext.HttpContext.Request.RouteValues["id"]));
+            var IsSubscribed = await _service.IsSubscribed(Convert.ToInt32(_httpContext.HttpContext?.Request.RouteValues["id"]));
 
             if (IsSubscribed)
             {
