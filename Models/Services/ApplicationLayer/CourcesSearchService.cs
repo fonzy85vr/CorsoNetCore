@@ -1,3 +1,5 @@
+using System.Security.Claims;
+using CorsoNetCore.Models.Entities;
 using CorsoNetCore.Models.Services.ApplicationLayer.Common;
 using CorsoNetCore.Models.Services.Repository;
 using CorsoNetCore.Models.ViewModel;
@@ -9,17 +11,20 @@ namespace CorsoNetCore.Models.Services.ApplicationLayer
     {
         private readonly CourcesDbContext _dbContext;
         private readonly ILogger<CourseSearchService> _logger;
+        private readonly IHttpContextAccessor _httpContext;
 
-        public CourseSearchService(ILogger<CourseSearchService> logger, CourcesDbContext dbContext)
+        public CourseSearchService(ILogger<CourseSearchService> logger, CourcesDbContext dbContext, IHttpContextAccessor httpContextAccessor)
         {
             _dbContext = dbContext;
             _logger = logger;
+            _httpContext = httpContextAccessor;
         }
 
         public async Task<CourseDetailViewModel?> GetDetail(int id)
         {
-            var toRet = await _dbContext.Courses.AsNoTracking().Where(course => course.Id == id).Select(course => 
-                new CourseDetailViewModel{
+            var toRet = await _dbContext.Courses.AsNoTracking().Where(course => course.Id == id).Select(course =>
+                new CourseDetailViewModel
+                {
                     Author = course.Author,
                     CurrentPrice = course.CurrentPrice,
                     Description = course.Description,
@@ -28,7 +33,8 @@ namespace CorsoNetCore.Models.Services.ApplicationLayer
                     Price = course.FullPrice,
                     Title = course.Title,
                     Rating = course.Rating,
-                    Lessons = course.Lessons.Select(lesson => new LessonViewModel{
+                    Lessons = course.Lessons.Select(lesson => new LessonViewModel
+                    {
                         Description = lesson.Description,
                         Id = lesson.Id,
                         Title = lesson.Title,
@@ -37,6 +43,31 @@ namespace CorsoNetCore.Models.Services.ApplicationLayer
                 }).FirstOrDefaultAsync();
 
             return toRet;
+        }
+
+        public async Task<bool> IsSubscribed(int id)
+        {
+            var userId = _httpContext.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var courses = await _dbContext.CourseSubscriptions.Where(subscriptions => subscriptions.CourseId == id && subscriptions.UserId == userId).ToListAsync();
+
+            return courses != null && courses.Count == 1;
+        }
+
+        public async Task<bool> Subscribe(int id)
+        {
+            var course = await GetDetail(id);
+            var subscribe = new CourseSubscriptions
+            {
+                CourseId = id,
+                DateSubscription = new DateOnly(),
+                PaymentMethod = "Paypal",
+                UserId = _httpContext.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier),
+                UserVote = 0
+            };
+
+            _dbContext.Add(subscribe);
+            _dbContext.SaveChanges();
+            return true;
         }
 
         protected override async Task<PaginatedResult<CourseViewModel>> SearchInternal(PaginationModel model)

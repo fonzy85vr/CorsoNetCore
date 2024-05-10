@@ -1,7 +1,12 @@
 using CorsoNetCore.Models.Entities;
-using ApplicationLayer = CorsoNetCore.Models.Services.ApplicationLayer;
+using Services = CorsoNetCore.Models;
 using CorsoNetCore.Models.Services.Repository;
 using Microsoft.EntityFrameworkCore;
+using CorsoNetCore.Models.Options;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using CorsoNetCore.Models.Authorization;
 
 namespace CorsoNetCore
 {
@@ -11,22 +16,14 @@ namespace CorsoNetCore
         {
             builder.Services.AddMvc();
 
-            builder.Services.AddDbContextPool<CourcesDbContext>(options =>
-            {
-                options.UseSqlite(builder.Configuration.GetConnectionString("Default"));
-            });
-
-            builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
-            {
-                options.Lockout.MaxFailedAccessAttempts = 3;
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-            }).AddEntityFrameworkStores<CourcesDbContext>();
-            builder.Services.AddRazorPages();
-
             builder.Services.AddResponseCaching();
 
-            // registro i servizi applicativi
-            ApplicationLayer.Startup.SetupServices(builder);
+            Services.Startup.RegisterServices(builder);
+        }
+
+        public static void SetupOptions(WebApplicationBuilder builder)
+        {
+            builder.Services.Configure<SmtpOption>(builder.Configuration.GetSection("Smtp"));
         }
     }
 }

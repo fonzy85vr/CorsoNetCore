@@ -24,6 +24,11 @@ namespace CorsoNetCore.Models.Services
                 });
         }
 
+        public Task<bool> IsSubscribed(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<PaginatedResult<CourseViewModel>?> Search(PaginationModel model)
         {
             if (model.Page < 3)
@@ -37,6 +42,11 @@ namespace CorsoNetCore.Models.Services
             }
 
             return _service.Search(model);
+        }
+
+        public Task<bool> Subscribe(int id)
+        {
+            return _service.Subscribe(id);
         }
     }
 }

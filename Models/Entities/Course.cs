@@ -14,6 +14,8 @@ namespace CorsoNetCore.Models.Entities
         public Money CurrentPrice { get; set; }
         public Money FullPrice { get; set; }
 
-        public List<Lesson> Lessons {get; set;}
+        public List<Lesson> Lessons { get; set; }
+
+        public List<ApplicationUser> UserSubscripted { get; set; }
     }
 }
