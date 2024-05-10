@@ -1,5 +1,8 @@
+using System.Globalization;
+using System.Text;
 using CorsoNetCore.Models.DataTypes.PaypalModels;
 using CorsoNetCore.Models.Options;
+using CorsoNetCore.Models.ViewModel;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
@@ -49,7 +52,7 @@ namespace CorsoNetCore.Models.Services.Repository
             return token;
         }
 
-        public async Task<string> GetPaymentUrl()
+        public async Task<string> GetPaymentUrl(CreateOrderModel model)
         {
             var paymentUrl = "";
             var request = new OrderRequest()
@@ -57,10 +60,10 @@ namespace CorsoNetCore.Models.Services.Repository
                 Intent = "CAPTURE",
                 PurchaseUnits = new List<PurchaseUnit>(){
                     new PurchaseUnit() {
-                        custom_id = $"order 1",
+                        custom_id = $"{model.UserId}:{model.CourseId}",
                         amount = new Amount{
-                            currency_code = "EUR",
-                            value = "10.00"
+                            currency_code = model.Amount.Currency.ToString(),
+                            value = model.Amount.Amount.ToString(CultureInfo.InvariantCulture)
                         }
                     }
                 },
@@ -87,7 +90,7 @@ namespace CorsoNetCore.Models.Services.Repository
                 _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
                 _httpClient.DefaultRequestHeaders.Add("prefer", $"return=representation");
 
-                var response = await _httpClient.PostAsJsonAsync("v2/checkout/orders", request);
+                var response = await _httpClient.PostAsync("v2/checkout/orders", new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json"));
                 var content = await response.Content.ReadAsStreamAsync();
                 using var stream = new StreamReader(content);
                 var result = stream.ReadToEnd();

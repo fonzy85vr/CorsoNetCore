@@ -17,9 +17,6 @@ namespace CorsoNetCore.Models.DataTypes.PaypalModels
         [JsonProperty("reference_id")]
         public string ReferenceId { get; set; }
 
-        [JsonProperty("custom_id")]
-        public string CustomId { get; set; }
-
         [JsonProperty("payments")]
         public Payment Payments { get; set; }
     }
@@ -38,5 +35,7 @@ namespace CorsoNetCore.Models.DataTypes.PaypalModels
         public string Status { get; set; }
         [JsonProperty("amount")]
         public Amount Amount { get; set; }
+        [JsonProperty("custom_id")]
+        public string CustomId { get; set; }
     }
 }

@@ -42,7 +42,7 @@ namespace CorsoNetCore.Controllers
         public async Task<IActionResult> Subscribe(int id)
         {
             //var result = await _courcesBL.Subscribe(id);
-            var result = await _paymentGateway.GetPaymentUrl();
+            var result = await _courcesBL.GetPaymentUrl(id);
 
             return Redirect(result);
         }

@@ -24,6 +24,11 @@ namespace CorsoNetCore.Models.Services
                 });
         }
 
+        public Task<string> GetPaymentUrl(int courseId)
+        {
+            return _service.GetPaymentUrl(courseId);
+        }
+
         public Task<bool> IsSubscribed(int id)
         {
             throw new NotImplementedException();
