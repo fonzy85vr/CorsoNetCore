@@ -69,7 +69,7 @@ namespace CorsoNetCore.Models.Services.ApplicationLayer
             _dbContext.SaveChanges();
             return true;
         }
-
+        
         protected override async Task<PaginatedResult<CourseViewModel>> SearchInternal(PaginationModel model)
         {
             _logger.LogInformation("Recuperiamo la lista dei corsi");
