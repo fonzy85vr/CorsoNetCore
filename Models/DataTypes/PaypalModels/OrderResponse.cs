@@ -1,16 +1,24 @@
+using Newtonsoft.Json;
+
 namespace CorsoNetCore.Models.DataTypes.PaypalModels
 {
     public class OrderResponse
     {
-        public string id { get; set; }
-        public string status { get; set; }
-        public List<Links> links { get; set; }
+        [JsonProperty("id")]
+        public string Id { get; set; }
+        [JsonProperty("status")]
+        public string Status { get; set; }
+        [JsonProperty("links")]
+        public List<Links> Links { get; set; }
     }
 
     public class Links
     {
-        public string href { get; set; }
-        public string rel { get; set; }
-        public string method { get; set; }
+        [JsonProperty("href")]
+        public string Href { get; set; }
+        [JsonProperty("rel")]
+        public string Rel { get; set; }
+        [JsonProperty("method")]
+        public string Method { get; set; }
     }
 }

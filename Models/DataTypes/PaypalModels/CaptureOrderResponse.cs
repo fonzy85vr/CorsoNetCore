@@ -1,32 +1,42 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace CorsoNetCore.Models.DataTypes.PaypalModels
 {
     public class CaptureOrderResponse
     {
-        public string id { get; set; }
-        public string status { get; set; }
-        public List<CapturePurchaseUnit> purchase_units { get; set; }
+        [JsonProperty("id")]
+        public string Id { get; set; }
+        [JsonProperty("status")]
+        public string Status { get; set; }
+        [JsonProperty("purchase_units")]
+        public List<CapturePurchaseUnit> PurchaseUnits { get; set; }
     }
 
     public class CapturePurchaseUnit
     {
-        public string reference_id { get; set; }
-        public Payment payments { get; set; }
+        [JsonProperty("reference_id")]
+        public string ReferenceId { get; set; }
+
+        [JsonProperty("custom_id")]
+        public string CustomId { get; set; }
+
+        [JsonProperty("payments")]
+        public Payment Payments { get; set; }
     }
 
     public class Payment
     {
-        public List<Capture> captures { get; set; }
+        [JsonProperty("captures")]
+        public List<Capture> Captures { get; set; }
     }
 
     public class Capture
     {
-        public string id { get; set; }
-        public string status { get; set; }
-        public Amount amount { get; set; }
+        [JsonProperty("id")]
+        public string Id { get; set; }
+        [JsonProperty("status")]
+        public string Status { get; set; }
+        [JsonProperty("amount")]
+        public Amount Amount { get; set; }
     }
 }

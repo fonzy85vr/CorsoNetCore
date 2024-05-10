@@ -1,32 +1,41 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace CorsoNetCore.Models.DataTypes.PaypalModels
 {
     public class OrderRequest
     {
-        public string intent { get; set; }
-        public List<PurchaseUnit> purchase_units { get; set; }
-        public Dictionary<string, PayPalSource> payment_source { get; set; }
+        [JsonProperty("intent")]
+        public string Intent { get; set; }
+        [JsonProperty("purchase_units")]
+        public List<PurchaseUnit> PurchaseUnits { get; set; }
+        [JsonProperty("payment_source")]
+        public Dictionary<string, PayPalSource> PaymentSource { get; set; }
     }
 
     public class PayPalSource
     {
-        public ExperienceContext experience_context { get; set; }
+        [JsonProperty("experience_context")]
+        public ExperienceContext ExperienceContext { get; set; }
     }
 
     public class ExperienceContext
     {
-        public string payment_method_preference { get; set; }
-        public string brand_name { get; set; }
-        public string locale { get; set; }
-        public string landing_page { get; set; }
-        public string shipping_preference { get; set; }
-        public string user_action { get; set; }
-        public string return_url { get; set; }
-        public string cancel_url { get; set; }
+        [JsonProperty("payment_method_preference")]
+        public string PaymentMethodPreference { get; set; }
+        [JsonProperty("brand_name")]
+        public string BrandName { get; set; }
+        [JsonProperty("locale")]
+        public string Locale { get; set; }
+        [JsonProperty("landing_page")]
+        public string LandingPage { get; set; }
+        [JsonProperty("shipping_preference")]
+        public string ShippingPreference { get; set; }
+        [JsonProperty("user_action")]
+        public string UserAction { get; set; }
+        [JsonProperty("return_url")]
+        public string ReturnUrl { get; set; }
+        [JsonProperty("cancel_url")]
+        public string CancelUrl { get; set; }
     }
 
     public class PurchaseUnit

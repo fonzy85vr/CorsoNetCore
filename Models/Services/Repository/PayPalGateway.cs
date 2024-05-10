@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using CorsoNetCore.Models.DataTypes.PaypalModels;
 using CorsoNetCore.Models.Options;
 using Microsoft.Extensions.Options;
@@ -42,10 +38,8 @@ namespace CorsoNetCore.Models.Services.Repository
 
                 if (jsonParsed != null)
                 {
-                    token = jsonParsed.access_token;
+                    token = jsonParsed.AccessToken;
                 }
-
-
             }
             catch (Exception ex)
             {
@@ -57,11 +51,11 @@ namespace CorsoNetCore.Models.Services.Repository
 
         public async Task<string> GetPaymentUrl()
         {
-            var toRet = "";
+            var paymentUrl = "";
             var request = new OrderRequest()
             {
-                intent = "CAPTURE",
-                purchase_units = new List<PurchaseUnit>(){
+                Intent = "CAPTURE",
+                PurchaseUnits = new List<PurchaseUnit>(){
                     new PurchaseUnit() {
                         custom_id = $"order 1",
                         amount = new Amount{
@@ -70,16 +64,16 @@ namespace CorsoNetCore.Models.Services.Repository
                         }
                     }
                 },
-                payment_source = new Dictionary<string, PayPalSource>(){
+                PaymentSource = new Dictionary<string, PayPalSource>(){
                     {
                         "paypal",
                         new PayPalSource {
-                            experience_context = new ExperienceContext {
-                                brand_name = "E-Learning",
-                                cancel_url = "https://localhost:7192",
-                                locale = "it-IT",
-                                return_url = "https://localhost:7192/Courses/ConfirmPayment",
-                                shipping_preference = "NO_SHIPPING"
+                            ExperienceContext = new ExperienceContext {
+                                BrandName = "E-Learning",
+                                CancelUrl = "https://localhost:7192",
+                                Locale = "it-IT",
+                                ReturnUrl = "https://localhost:7192/Courses/ConfirmPayment",
+                                ShippingPreference = "NO_SHIPPING"
                             }
                         }
                     }
@@ -91,7 +85,7 @@ namespace CorsoNetCore.Models.Services.Repository
             {
                 _httpClient.DefaultRequestHeaders.Remove("Authorization");
                 _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
-                _httpClient.DefaultRequestHeaders.Add("Prefer", $"return=representation");
+                _httpClient.DefaultRequestHeaders.Add("prefer", $"return=representation");
 
                 var response = await _httpClient.PostAsJsonAsync("v2/checkout/orders", request);
                 var content = await response.Content.ReadAsStreamAsync();
@@ -102,14 +96,15 @@ namespace CorsoNetCore.Models.Services.Repository
 
                 if (jsonParsed != null)
                 {
-                    toRet = jsonParsed.links.Where(link => link.rel == "payer-action").FirstOrDefault()?.href;
+                    paymentUrl = jsonParsed.Links.Where(link => link.Rel == "payer-action").FirstOrDefault()?.Href ?? "";
                 }
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
             }
-            return toRet;
+
+            return paymentUrl;
         }
 
         public async Task<bool> Confirm(string token)
