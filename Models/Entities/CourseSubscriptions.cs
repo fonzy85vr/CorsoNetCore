@@ -9,5 +9,6 @@ namespace CorsoNetCore.Models.Entities
         public DateOnly DateSubscription { get; set; }
         public double UserVote { get; set; }
         public string PaymentMethod { get; set; }
+        public string TransactionId {get;set;}
     }
 }

@@ -1,12 +1,5 @@
-using CorsoNetCore.Models.Entities;
 using Services = CorsoNetCore.Models;
-using CorsoNetCore.Models.Services.Repository;
-using Microsoft.EntityFrameworkCore;
 using CorsoNetCore.Models.Options;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using CorsoNetCore.Models.Authorization;
 
 namespace CorsoNetCore
 {
@@ -24,6 +17,7 @@ namespace CorsoNetCore
         public static void SetupOptions(WebApplicationBuilder builder)
         {
             builder.Services.Configure<SmtpOption>(builder.Configuration.GetSection("Smtp"));
+            builder.Services.Configure<PaymentOption>(builder.Configuration.GetSection("Paypal"));
         }
     }
 }

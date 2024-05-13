@@ -14,7 +14,7 @@
             @if(isSubscribed){
                 <a class="btn btn-warning btn-lg disabled" role="button" id="subscribeButton">ISCRITTO</a>
             } else{
-                <a class="btn btn-warning btn-lg" role="button" id="subscribeButton">ISCRIVITI</a>
+                <a class="btn btn-warning btn-lg" role="button" id="subscribeButton" asp-action="Subscribe" asp-route-id="@Model.Id">ISCRIVITI</a>
             }
         </div>
 
@@ -34,7 +34,6 @@
                 </div>
                 <div>
                     <img src="@Model.ImagePath" width="223" height="223"/>
-    using Microsoft.AspNetCore.Authorization;
                 </div>
             </aside>
         </div>
@@ -67,7 +66,7 @@
     </div>
 </section>
 
-<script>
+@* <script>
     $(document).ready(function(){
         var subscribe = function() {
             var toPost = {
@@ -89,4 +88,4 @@
             subscribe();
         });
     });
-</script>
+</script> *@

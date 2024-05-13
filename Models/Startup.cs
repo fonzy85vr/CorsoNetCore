@@ -19,7 +19,7 @@ namespace CorsoNetCore.Models
         {
             RegisterRepositoryServices(builder);
             RegisterApplicationServices(builder);
-            RegisterAuthenticationServices(builder);
+            ConfigureAuthentication(builder);
         }
 
         private static void RegisterApplicationServices(WebApplicationBuilder builder)
@@ -34,9 +34,10 @@ namespace CorsoNetCore.Models
             ConfigureDbContext(builder);
 
             builder.Services.AddSingleton<IEmailSender, MailService>();
+            builder.Services.AddScoped<IPaymentGateway, PayPalGateway>();
         }
 
-        private static void RegisterAuthenticationServices(WebApplicationBuilder builder)
+        private static void ConfigureAuthentication(WebApplicationBuilder builder)
         {
             builder.Services.AddScoped<IAuthorizationHandler, SubscriberRequirementHandler>();
 

@@ -8,5 +8,6 @@ namespace CorsoNetCore.Models.Services.ApplicationLayer
         Task<CourseDetailViewModel?> GetDetail(int id);
         Task<bool> Subscribe(int id);
         Task<bool> IsSubscribed(int id);
+        Task<string> GetPaymentUrl(int courseId);
     }
 }

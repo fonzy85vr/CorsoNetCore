@@ -12,12 +12,14 @@ namespace CorsoNetCore.Models.Services.ApplicationLayer
         private readonly CourcesDbContext _dbContext;
         private readonly ILogger<CourseSearchService> _logger;
         private readonly IHttpContextAccessor _httpContext;
+        private readonly IPaymentGateway _paymentGateway;
 
-        public CourseSearchService(ILogger<CourseSearchService> logger, CourcesDbContext dbContext, IHttpContextAccessor httpContextAccessor)
+        public CourseSearchService(ILogger<CourseSearchService> logger, CourcesDbContext dbContext, IHttpContextAccessor httpContextAccessor, IPaymentGateway paymentGateway)
         {
             _dbContext = dbContext;
             _logger = logger;
             _httpContext = httpContextAccessor;
+            _paymentGateway = paymentGateway;
         }
 
         public async Task<CourseDetailViewModel?> GetDetail(int id)
@@ -61,13 +63,35 @@ namespace CorsoNetCore.Models.Services.ApplicationLayer
                 CourseId = id,
                 DateSubscription = new DateOnly(),
                 PaymentMethod = "Paypal",
-                UserId = _httpContext.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier),
+                UserId = _httpContext.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "",
                 UserVote = 0
             };
 
             _dbContext.Add(subscribe);
             _dbContext.SaveChanges();
             return true;
+        }
+
+        public async Task<string> GetPaymentUrl(int courseId)
+        {
+            var course = await GetDetail(courseId);
+            if (course != null)
+            {
+                var model = new CreateOrderModel
+                {
+                    CourseId = courseId,
+                    Amount = new DataTypes.Money
+                    {
+                        Amount = course.CurrentPrice.Amount,
+                        Currency = course.CurrentPrice.Currency
+                    },
+                    UserId = _httpContext.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier) ?? ""
+                };
+
+                return await _paymentGateway.GetPaymentUrl(model);
+            }
+
+            return "";
         }
 
         protected override async Task<PaginatedResult<CourseViewModel>> SearchInternal(PaginationModel model)
