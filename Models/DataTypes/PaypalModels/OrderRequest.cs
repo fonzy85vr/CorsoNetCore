@@ -41,12 +41,37 @@ namespace CorsoNetCore.Models.DataTypes.PaypalModels
     public class PurchaseUnit
     {
         public string custom_id { get; set; }
-        public Amount amount { get; set; }
+        public string description { get; set; }
+        public AmountWithBreakdown amount { get; set; }
+        [JsonProperty("items")]
+        public List<PurchasItem> Items { get; set; }
+    }
+
+    public class PurchasItem
+    {
+        [JsonProperty("name")]
+        public string Name { get; set; }
+        [JsonProperty("quantity")]
+        public string Quantity { get; set; }
+        [JsonProperty("unit_amount")]
+        public Amount UnitAmount { get; set; }
     }
 
     public class Amount
     {
         public string currency_code { get; set; }
         public string value { get; set; }
+    }
+
+    public class AmountWithBreakdown : Amount
+    {
+        [JsonProperty("breakdown")]
+        public Breakdown Breakdown { get; set; }
+    }
+
+    public class Breakdown
+    {
+        [JsonProperty("item_total")]
+        public Amount ItemTotal { get; set; }
     }
 }

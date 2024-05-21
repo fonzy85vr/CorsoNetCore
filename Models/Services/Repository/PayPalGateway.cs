@@ -61,9 +61,26 @@ namespace CorsoNetCore.Models.Services.Repository
                 PurchaseUnits = new List<PurchaseUnit>(){
                     new PurchaseUnit() {
                         custom_id = $"{model.UserId}:{model.CourseId}",
-                        amount = new Amount{
+                        amount = new AmountWithBreakdown{
                             currency_code = model.Amount.Currency.ToString(),
-                            value = model.Amount.Amount.ToString(CultureInfo.InvariantCulture)
+                            value = model.Amount.Amount.ToString(CultureInfo.InvariantCulture),
+                            Breakdown = new Breakdown {
+                                ItemTotal = new Amount {
+                                    currency_code = model.Amount.Currency.ToString(),
+                                    value = model.Amount.Amount.ToString(CultureInfo.InvariantCulture)
+                                }
+                            }
+                        },
+                        description = model.Description,
+                        Items = new List<PurchasItem> {
+                            new PurchasItem {
+                                Name = model.Description,
+                                Quantity = "1",
+                                UnitAmount = new Amount {
+                                    currency_code = model.Amount.Currency.ToString(),
+                                    value = model.Amount.Amount.ToString(CultureInfo.InvariantCulture)
+                                }
+                            }
                         }
                     }
                 },
@@ -88,7 +105,7 @@ namespace CorsoNetCore.Models.Services.Repository
             {
                 _httpClient.DefaultRequestHeaders.Remove("Authorization");
                 _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
-                _httpClient.DefaultRequestHeaders.Add("prefer", $"return=representation");
+                _httpClient.DefaultRequestHeaders.Add("Prefer", $"return=representation");
 
                 var response = await _httpClient.PostAsync("v2/checkout/orders", new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json"));
                 var content = await response.Content.ReadAsStreamAsync();

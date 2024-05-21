@@ -90,7 +90,8 @@ namespace CorsoNetCore.Models.Services.ApplicationLayer
                         Amount = course.CurrentPrice.Amount,
                         Currency = course.CurrentPrice.Currency
                     },
-                    UserId = _httpContext.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier) ?? ""
+                    UserId = _httpContext.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "",
+                    Description = course.Title
                 };
 
                 return await _paymentGateway.GetPaymentUrl(model);
