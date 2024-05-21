@@ -9,6 +9,6 @@ namespace CorsoNetCore.Models.Services.Repository
     public interface IPaymentGateway
     {
         Task<string> GetPaymentUrl(CreateOrderModel model);
-        Task<bool> Confirm(string token);
+        Task<string> Confirm(string token);
     }
 }

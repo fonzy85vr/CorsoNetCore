@@ -55,21 +55,26 @@ namespace CorsoNetCore.Models.Services.ApplicationLayer
             return courses != null && courses.Count == 1;
         }
 
-        public async Task<bool> Subscribe(int id)
+        public async Task<int> Subscribe(string idTransaction)
         {
-            var course = await GetDetail(id);
+
+            var customToken = await _paymentGateway.Confirm(idTransaction);
+
+            var id = int.Parse(customToken.Split(':')[1]);
+
             var subscribe = new CourseSubscriptions
             {
                 CourseId = id,
-                DateSubscription = new DateOnly(),
+                DateSubscription = DateOnly.FromDateTime(DateTime.Today),
                 PaymentMethod = "Paypal",
                 UserId = _httpContext.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "",
-                UserVote = 0
+                UserVote = 0,
+                TransactionId = idTransaction
             };
 
             _dbContext.Add(subscribe);
             _dbContext.SaveChanges();
-            return true;
+            return id;
         }
 
         public async Task<string> GetPaymentUrl(int courseId)

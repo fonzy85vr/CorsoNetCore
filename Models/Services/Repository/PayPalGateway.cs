@@ -110,7 +110,7 @@ namespace CorsoNetCore.Models.Services.Repository
             return paymentUrl;
         }
 
-        public async Task<bool> Confirm(string token)
+        public async Task<string> Confirm(string token)
         {
             var authToken = await Authorize();
 
@@ -128,12 +128,12 @@ namespace CorsoNetCore.Models.Services.Repository
 
                 var jsonParsed = JsonConvert.DeserializeObject<CaptureOrderResponse>(result.ToString());
 
-                return true;
+                return jsonParsed!.PurchaseUnits.FirstOrDefault()!.Payments.Captures!.FirstOrDefault()!.CustomId;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
-                return false;
+                return "";
             }
         }
     }

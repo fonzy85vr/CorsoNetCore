@@ -48,9 +48,9 @@ namespace CorsoNetCore.Controllers
         }
 
         public async Task<IActionResult> ConfirmPayment(string token, string payerID) {
-            var result = await _paymentGateway.Confirm(token);
+            var result = await _courcesBL.Subscribe(token);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Detail", new { id = result });
         }
     }
 }

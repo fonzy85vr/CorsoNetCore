@@ -49,9 +49,9 @@ namespace CorsoNetCore.Models.Services
             return _service.Search(model);
         }
 
-        public Task<bool> Subscribe(int id)
+        public Task<int> Subscribe(string token)
         {
-            return _service.Subscribe(id);
+            return _service.Subscribe(token);
         }
     }
 }
